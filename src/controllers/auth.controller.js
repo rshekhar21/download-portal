@@ -110,10 +110,10 @@ export async function showRegister(req, res, next) {
   );
 
   if (result[0].count > 0) {
-    return res.redirect('login');
+    return res.redirect('/auth/login');
   }
 
-  res.render('register', { title: 'Create Admin' });
+  res.render('auth/register', { title: 'Create Admin', error: null, success: null, pageScript: null });
 }
 
 /* =========================================================
