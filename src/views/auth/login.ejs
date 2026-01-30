@@ -1,0 +1,60 @@
+<div class="row justify-content-center mt-5">
+  <div class="col-md-5 col-lg-4">
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-4">
+
+        <h4 class="text-center mb-4">Admin Login</h4>
+
+        <!-- Error message -->
+        <% if (error) { %>
+          <div class="alert alert-danger">
+            <%= error %>
+          </div>
+        <% } %>
+
+        <form method="POST" action="/auth/login" autocomplete="off">
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              placeholder="admin@example.com"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              placeholder="••••••••"
+              required
+            >
+          </div>
+
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary">
+              Login
+            </button>
+          </div>
+
+        </form>
+
+        <hr class="my-4">
+
+        <% if (showSetup) { %>
+          <div class="text-center mt-3">
+            <a href="/register" class="text-decoration-none">
+              First-time setup (Create Admin)
+            </a>
+          </div>
+        <% } %>
+
+      </div>
+    </div>
+  </div>
+</div>

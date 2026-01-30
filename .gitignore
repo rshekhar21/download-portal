@@ -1,0 +1,87 @@
+# =========================
+# Node.js
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# OS / Editor files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# Uploads / Assets
+# =========================
+uploads/
+assets/
+public/uploads/
+
+# =========================
+# Runtime / Temp
+# =========================
+tmp/
+temp/
+.cache/
+
+# =========================
+# Build / Distribution
+# =========================
+dist/
+build/
+
+# =========================
+# Database dumps / backups
+# =========================
+#*.sql
+*.dump
+*.bak
+
+# =========================
+# Coverage / Tests
+# =========================
+coverage/
+.nyc_output/
+
+# =========================
+# PM2
+# =========================
+pids/
+*.pid
+*.pid.lock
+
+# =========================
+# Optional security
+# =========================
+*.key
+*.pem
+*.crt
+
+# =========================
+# Misc
+# =========================
+*.zip
+*.rar
+*.7z

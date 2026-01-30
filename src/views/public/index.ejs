@@ -1,0 +1,132 @@
+<div class="d-flex justify-content-between align-items-center mb-5">
+  <div>
+    <h3 class="mb-0">Available Downloads</h3>
+    <small class="text-muted">Click a file to download</small>
+  </div>
+
+  <input type="text" id="searchInput" class="form-control w-25" placeholder="Search downloads...">
+</div>
+
+
+<div class="row">
+  <% if (!files.length) { %>
+    <div class="col">
+      <div class="alert alert-info">
+        No files available for download.
+      </div>
+    </div>
+    <% } %>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover align-middle mb-0" id="downloadsTable">
+    <thead class="table-light">
+      <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Size</th>
+        <th class="text-end">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if (files.length === 0) { %>
+        <tr>
+          <td colspan="5" class="text-center text-muted py-4">
+            No downloads available
+          </td>
+        </tr>
+      <% } else { %>
+
+        <% files.forEach(file => { %>
+          <tr>
+            <td class="fw-semibold"><%= file.title %></td>
+
+            <td>
+              <span class="badge bg-secondary">
+                <%= file.category || 'Uncategorized' %>
+              </span>
+            </td>
+
+            <td class="text-muted">
+              <%= file.description || '-' %>
+            </td>
+
+            <td>
+              <%= (file.file_size / 1024 / 1024).toFixed(2) %> MB
+            </td>
+
+            <td class="text-end">
+              <a href="/download/<%= file.id %>"
+                 class="btn btn-sm btn-primary">
+                Download
+              </a>
+            </td>
+          </tr>
+        <% }) %>
+
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .highlight {
+    background-color: #fff3cd;
+    padding: 0 2px;
+    border-radius: 3px;
+  }
+</style>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const table = document.getElementById('downloadsTable');
+  const rows = table.querySelectorAll('tbody tr');
+
+  // Store original cell text
+  rows.forEach(row => {
+    row.querySelectorAll('td').forEach(cell => {
+      cell.dataset.original = cell.innerHTML;
+    });
+  });
+
+  searchInput.addEventListener('input', function () {
+    const query = this.value.trim().toLowerCase();
+
+    rows.forEach(row => {
+      let rowText = '';
+      row.querySelectorAll('td').forEach(cell => {
+        // restore original text first
+        cell.innerHTML = cell.dataset.original;
+        rowText += cell.textContent.toLowerCase();
+      });
+
+      if (!query) {
+        row.style.display = '';
+        return;
+      }
+
+      if (rowText.includes(query)) {
+        row.style.display = '';
+
+        // highlight matching text
+        row.querySelectorAll('td').forEach(cell => {
+          const text = cell.textContent;
+          const index = text.toLowerCase().indexOf(query);
+
+          if (index !== -1) {
+            const before = text.slice(0, index);
+            const match = text.slice(index, index + query.length);
+            const after = text.slice(index + query.length);
+
+            cell.innerHTML =
+              `${before}<span class="highlight">${match}</span>${after}`;
+          }
+        });
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+</script>
