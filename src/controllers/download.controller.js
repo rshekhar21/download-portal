@@ -27,7 +27,7 @@ export async function showDownloads(req, res, next) {
       FROM files f
       LEFT JOIN categories c ON c.id = f.category_id
       WHERE f.is_active = 1
-      ORDER BY f.created_at DESC
+      ORDER BY f.title ASC
     `);
 
     res.render('public/index', {

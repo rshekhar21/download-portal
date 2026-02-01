@@ -37,6 +37,6 @@ router.get('/files/:id/edit', adminController.editFilePage);
 router.post('/files/:id/edit', adminController.updateFile);
 
 router.post('/files/:id/toggle', adminController.toggleFileStatus);
-// router.post('/files/:id/delete', adminController.deleteFile);
+router.post('/files/:id/delete', adminController.deleteFile);
 
 export default router;

@@ -11,55 +11,133 @@
         </div>
         <% } %>
 
-            <form action="/admin/upload" method="POST" enctype="multipart/form-data"
-                class="card shadow-sm border-0 p-4 col-lg-6">
+            <form id="uploadForm" action="/admin/upload" method="POST" enctype="multipart/form-data">
 
-                <div class="mb-3">
-                    <label class="form-label">Title *</label>
-                    <input type="text" name="title" class="form-control" required>
+                <div class="row">
+                    <!-- LEFT COLUMN -->
+                    <div class="col-md-6">
+
+                        <div class="mb-3">
+                            <label class="form-label">Title *</label>
+                            <input type="text" name="title" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select name="category_id" class="form-select">
+                                <option value="">-- Select Category --</option>
+                                <% categories.forEach(cat=> { %>
+                                    <option value="<%= cat.id %>">
+                                        <%= cat.name %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" class="form-control" rows="4"></textarea>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT COLUMN -->
+                    <div class="col-md-6">
+
+                        <label class="form-label">File *</label>
+
+                        <input type="file" name="file" id="fileInput" class="form-control d-none" required>
+
+                        <div id="dropZone">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                            <strong>Drag & drop file here</strong><br>
+                            <span class="text-muted">or click to select</span>
+                        </div>
+
+
+                    </div>
                 </div>
 
-                <!-- <div class="mb-3">
-                    <label class="form-label">Category</label>
-                    <input type="text" name="category" class="form-control" placeholder="Software / Update / Document">
-                </div> -->
-
-                <div class="mb-3">
-                    <label class="form-label">Category</label>
-
-                    <select name="category_id" class="form-select">
-                        <option value="">-- Select Category --</option>
-
-                        <% categories.forEach(cat=> { %>
-                            <option value="<%= cat.id %>">
-                                <%= cat.name %>
-                            </option>
-                            <% }) %>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea name="description" class="form-control" rows="3"></textarea>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label">File *</label>
-                    <input type="file" name="file" class="form-control" required>
-                    <small class="text-muted">
-                        Max size: 500MB
-                    </small>
-                </div>
-
-                <div class="d-flex gap-2">
+                <!-- ACTION BUTTON -->
+                <div class="mt-3">
                     <button class="btn btn-primary">
-                        <i class="bi bi-upload me-1"></i> Upload
+                        Upload
                     </button>
-                    <a href="/admin/dashboard" class="btn btn-outline-secondary">
-                        Cancel
-                    </a>
                 </div>
 
             </form>
 
+
+            <!-- Upload Progress -->
+            <div id="progressWrapper" class="mt-3 d-none">
+                <div class="progress mb-2">
+                    <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated"
+                        role="progressbar" style="width:0%">
+                        0%
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between small text-muted">
+                    <span id="speedText">Speed: 0 KB/s</span>
+                    <span id="timeText">Remaining: --</span>
+                </div>
+
+                <button type="button" id="cancelBtn" class="btn btn-sm btn-outline-danger mt-2">
+                    ❌ Cancel Upload
+                </button>
+            </div>
+
 </div>
+
+<style>
+    /* Drag & Drop Zone */
+    #dropZone {
+        border: 2px dashed #adb5bd;
+        border-radius: 10px;
+        padding: 40px;
+        text-align: center;
+        background-color: #f8f9fa;
+        color: #495057;
+        transition:
+            background-color 0.25s ease,
+            border-color 0.25s ease,
+            box-shadow 0.25s ease,
+            transform 0.2s ease;
+    }
+
+    /* Hover / Drag Active */
+    #dropZone.drag-active {
+        background-color: #e7f1ff;
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        transform: scale(1.02);
+    }
+
+    /* Optional icon effect */
+    #dropZone i {
+        font-size: 32px;
+        display: block;
+        margin-bottom: 10px;
+        color: #0d6efd;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(13, 110, 253, .4);
+        }
+
+        70% {
+            box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+        }
+    }
+
+    #dropZone.drag-active {
+        animation: pulse 1.2s infinite;
+    }
+</style>
+
+<script type="module" src="/js/upload.js"></script>

@@ -26,7 +26,7 @@ export async function dashboard(req, res, next) {
       FROM files f
       LEFT JOIN categories c ON c.id = f.category_id
       ORDER BY f.created_at DESC
-      LIMIT 10
+      LIMIT 50
     `);
 
     res.render('admin/dashboard', {
@@ -224,6 +224,7 @@ export async function listFiles(req, res, next) {
         f.title,
         f.downloads,
         f.is_active,
+        f.file_size AS size,
         f.created_at,
         c.name AS category
       FROM files f

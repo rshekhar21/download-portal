@@ -5,7 +5,13 @@
     <a href="/admin/upload" class="btn btn-primary">Upload File</a>
   </div>
 
-  <div class="card shadow-sm border-0">
+  <% function formatSize(bytes) { if (!bytes) return '0 KB' ; if (bytes>= 1024 * 1024) {
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+    return (bytes / 1024).toFixed(1) + ' KB';
+    }
+    %>
+
     <div class="table-responsive">
       <table class="table table-hover align-middle mb-0">
         <thead class="table-light">
@@ -14,46 +20,54 @@
             <th>Category</th>
             <th>Downloads</th>
             <th>Status</th>
+            <th>Size</th>
             <th>Uploaded</th>
-            <th>Action</th>
+            <th class="text-end">Action</th>
           </tr>
         </thead>
 
         <tbody>
-          <% files.forEach(file => { %>
+          <% files.forEach(file=> { %>
             <tr>
-              <td><strong><%= file.title %></strong></td>
+              <td><strong>
+                  <%= file.title %>
+                </strong></td>
               <td>
                 <span class="badge bg-secondary">
                   <%= file.category || 'Uncategorized' %>
                 </span>
               </td>
-              <td><%= file.downloads %></td>
+              <td>
+                <%= file.downloads %>
+              </td>
               <td>
                 <% if (file.is_active) { %>
                   <span class="badge bg-success">Active</span>
-                <% } else { %>
-                  <span class="badge bg-danger">Disabled</span>
-                <% } %>
+                  <% } else { %>
+                    <span class="badge bg-danger">Disabled</span>
+                    <% } %>
               </td>
-              <td><%= new Date(file.created_at).toLocaleDateString() %></td>
-              <td class="d-flex gap-1">
+              <td>
+                <%= formatSize(file.size) %>
+              </td>
+              <td>
+                <%= new Date(file.created_at).toLocaleDateString() %>
+              </td>
+              <td class="d-flex gap-1 justify-content-end">
 
-                <a href="/admin/files/<%= file.id %>/edit"
-                   class="btn btn-sm btn-outline-primary">
-                  Edit
-                </a>
+                <!-- <a href="/admin/files/<%= file.id %>/edit"
+                 class="btn btn-sm btn-outline-primary">
+                Edit
+              </a> -->
 
-                <form action="/admin/files/<%= file.id %>/toggle"
-                      method="POST">
+                <form action="/admin/files/<%= file.id %>/toggle" method="POST">
                   <button class="btn btn-sm btn-outline-warning">
                     <%= file.is_active ? 'Disable' : 'Enable' %>
                   </button>
                 </form>
 
-                <form action="/admin/files/<%= file.id %>/delete"
-                      method="POST"
-                      onsubmit="return confirm('Delete this file permanently?')">
+                <form action="/admin/files/<%= file.id %>/delete" method="POST"
+                  onsubmit="return confirm('Delete this file permanently?')">
                   <button class="btn btn-sm btn-outline-danger">
                     Delete
                   </button>
@@ -61,11 +75,11 @@
 
               </td>
             </tr>
-          <% }) %>
+            <% }) %>
         </tbody>
 
       </table>
     </div>
-  </div>
 
 </div>
+

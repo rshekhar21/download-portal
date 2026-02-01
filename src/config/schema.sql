@@ -1,5 +1,4 @@
--- Active: 1758703925434@@127.0.0.1@3306@download_portal
--- Active: 1758703925434@@127.0.0.1@3306@db_cfc
+-- Active: 1754848941253@@127.0.0.1@3306@download_portal
 /* =========================================================
    DATABASE & USER
    ========================================================= */
@@ -53,8 +52,38 @@ INSERT INTO categories (name, description, is_active) VALUES
 ('Apps', 'Desktop or mobile apps', 1),
 ('Drivers', 'Hardware drivers', 1),
 ('Reports', 'Generated system reports', 1),
+('Installers', 'Setup and installation files', 1),
+('Media', 'Images, videos, audio files', 1),
+('Archives', 'Compressed files and backups', 1),
+('Templates', 'File templates and samples', 1),
+('Scripts', 'Automation and script files', 1),
+('ISOs', 'Disk image files', 1),
+('Fonts', 'Font files for design', 1),
+('Plugins', 'Software plugins and extensions', 1),
+('Themes', 'UI themes and skins', 1),
+('Code', 'Source code files', 1),
+('Logs', 'System and application logs', 1),
+('Configs', 'Configuration files', 1),
+('Backups', 'Backup files', 1),
+('Temp', 'Temporary files', 1),
+('Downloads', 'Downloaded files', 1),
+('Uploads', 'Uploaded files', 1),
+('Projects', 'Project-related files', 1),
+('Data', 'Data files and datasets', 1),
+('Spreadsheets', 'Excel and spreadsheet files', 1),
+('Presentations', 'PowerPoint and presentation files', 1),
+('Ebooks', 'Electronic book files', 1),
+('Videos', 'Video files and media', 1),
+('Images', 'Image files and graphics', 1),
+('Audio', 'Audio files and music', 1),
+('PDFs', 'PDF documents', 1),
+('Designs', 'Design files and assets', 1),
 ('Misc', 'Other uncategorized files', 1);
 
+SELECT * FROM categories;
+
+-- DELETE FROM categories;
+-- ALTER Table categories AUTO_INCREMENT = 1;
 
 /* =========================================================
    FILES TABLE

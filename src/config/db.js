@@ -1,12 +1,10 @@
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
+const log = console.log;
 
 dotenv.config();
 
-/**
- * MySQL Connection Pool
- */
-const pool = mysql.createPool({
+const config = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT || 3306,
   user: process.env.DB_USER,
@@ -16,7 +14,13 @@ const pool = mysql.createPool({
   connectionLimit: Number(process.env.DB_CONNECTION_LIMIT || 10),
   queueLimit: 0,
   timezone: '+00:00'
-});
+}
+
+/**
+ * MySQL Connection Pool
+ */
+const pool = mysql.createPool(config);
+
 
 /**
  * Reusable SQL runner
