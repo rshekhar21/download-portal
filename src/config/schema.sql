@@ -54,33 +54,16 @@ INSERT INTO categories (name, description, is_active) VALUES
 ('Reports', 'Generated system reports', 1),
 ('Installers', 'Setup and installation files', 1),
 ('Media', 'Images, videos, audio files', 1),
-('Archives', 'Compressed files and backups', 1),
-('Templates', 'File templates and samples', 1),
-('Scripts', 'Automation and script files', 1),
-('ISOs', 'Disk image files', 1),
-('Fonts', 'Font files for design', 1),
-('Plugins', 'Software plugins and extensions', 1),
-('Themes', 'UI themes and skins', 1),
-('Code', 'Source code files', 1),
-('Logs', 'System and application logs', 1),
-('Configs', 'Configuration files', 1),
-('Backups', 'Backup files', 1),
-('Temp', 'Temporary files', 1),
-('Downloads', 'Downloaded files', 1),
-('Uploads', 'Uploaded files', 1),
-('Projects', 'Project-related files', 1),
-('Data', 'Data files and datasets', 1),
-('Spreadsheets', 'Excel and spreadsheet files', 1),
-('Presentations', 'PowerPoint and presentation files', 1),
-('Ebooks', 'Electronic book files', 1),
-('Videos', 'Video files and media', 1),
-('Images', 'Image files and graphics', 1),
-('Audio', 'Audio files and music', 1),
-('PDFs', 'PDF documents', 1),
-('Designs', 'Design files and assets', 1),
-('Misc', 'Other uncategorized files', 1);
+('Archives', 'Compressed files and backups', 1);
 
 SELECT * FROM categories;
+
+-- Remove any categories beyond the top ten in case the table was previously populated
+DELETE FROM categories
+  WHERE name NOT IN (
+    'Utility','Software','Documents','Updates','Apps',
+    'Drivers','Reports','Installers','Media','Archives'
+  );
 
 -- DELETE FROM categories;
 -- ALTER Table categories AUTO_INCREMENT = 1;
@@ -89,20 +72,20 @@ SELECT * FROM categories;
    FILES TABLE
    ========================================================= */
 
-CREATE TABLE files (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(255) NOT NULL,
-  description TEXT NULL,
-  category_id INT UNSIGNED,
-  file_name VARCHAR(255) NOT NULL,
-  stored_name VARCHAR(255) NOT NULL,
-  file_path VARCHAR(255) NOT NULL,
-  mime_type VARCHAR(100) NOT NULL,
-  file_size BIGINT UNSIGNED NOT NULL,
-  downloads INT UNSIGNED DEFAULT 0,
-  is_active TINYINT(1) DEFAULT 1,
-  uploaded_by INT UNSIGNED,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `files` (
+  `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(255) NOT NULL,
+  `description` TEXT NULL,
+  `category_id` INT UNSIGNED,
+  `file_name` VARCHAR(255) NOT NULL,
+  `stored_name` VARCHAR(255) NOT NULL,
+  `file_path` VARCHAR(255) NOT NULL,
+  `mime_type` VARCHAR(100) NOT NULL,
+  `file_size` BIGINT UNSIGNED NOT NULL,
+  `downloads` INT UNSIGNED DEFAULT 0,
+  `is_active` TINYINT(1) DEFAULT 1,
+  `uploaded_by` INT UNSIGNED,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
   CONSTRAINT fk_files_category
     FOREIGN KEY (category_id)
@@ -119,12 +102,12 @@ CREATE TABLE files (
    DOWNLOAD LOG (OPTIONAL BUT RECOMMENDED)
    ========================================================= */
 
-CREATE TABLE download_logs (
-  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  file_id INT UNSIGNED NOT NULL,
-  ip_address VARCHAR(45) NOT NULL,
-  user_agent VARCHAR(255),
-  downloaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `download_logs` (
+  `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `file_id` INT UNSIGNED NOT NULL,
+  `ip_address` VARCHAR(45) NOT NULL,
+  `user_agent` VARCHAR(255),
+  `downloaded_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
   CONSTRAINT fk_logs_file
     FOREIGN KEY (file_id)
